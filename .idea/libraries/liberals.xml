@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="liberals">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/liberals" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/natives" />
+    </NATIVE>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/liberals" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/liberals" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/liberals" recursive="false" type="SOURCES" />
+  </library>
+</component>
