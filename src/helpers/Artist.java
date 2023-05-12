@@ -13,13 +13,13 @@ import java.io.InputStream;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Artist {
-    public static final int WIDTH = 1472, HEIGHT = 960;
+    public static final int WIDTH = 300, HEIGHT = 300;
     public static final int TILE_SIZE = 64;
 
 
     public static void BeginSession(){
 
-        Display.setTitle("BTD 7");
+        Display.setTitle("TTTLWJGL");
         try {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create();
@@ -53,6 +53,18 @@ public class Artist {
         glVertex2f(x + width, y + height);   // bottom r
         glVertex2f(x, y + height);   // bottom l
         glEnd();
+    }
+
+    public static void DrawLine(int x1, int y1, int x2, int y2){
+        glBegin(GL_LINES);
+        glColor3d(255, 255, 255);
+        glVertex2i(x1, y1);
+        glVertex2i(x2, y2);
+        glEnd();
+    }
+
+    public static void ClearArea(){
+        glClear(1);
     }
 
     public static void DrawQuadTex(Texture tex, float x, float y, float width, float height){
@@ -107,7 +119,7 @@ public class Artist {
     public static Texture QuickLoad(String name){
         Texture tex = null;
 
-        tex = LoadTexture("res/" + name + ".png", "PNG");
+        tex = LoadTexture("src/res/" + name + ".png", "PNG");
 
         return tex;
     }

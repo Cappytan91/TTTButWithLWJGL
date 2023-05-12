@@ -1,5 +1,6 @@
 import helpers.Artist;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
 import javax.swing.*;
@@ -7,15 +8,12 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static helpers.Artist.DrawQuadTex;
-import static helpers.Artist.QuickLoad;
+import static helpers.Artist.*;
 
 public class Runner {
 
     public JFrame frame;
-    public JPanel panel;
     public Image X, O;
-    public Graphics panelG, frameG;
     public Texture[] pieces;
     public int index;
     public int[][] board;
@@ -35,12 +33,6 @@ public class Runner {
         this.pieces = new Texture[]{null, QuickLoad("X"),  QuickLoad("O")};
         this.index = 1;
 
-
-
-
-        while (true){
-            updater(panelG);
-        }
     }
 
     public void setupWindow(){
@@ -50,34 +42,25 @@ public class Runner {
                 super.paint(g);
             }
         };
-        panel = new JPanel(){
-            @Override
-            public void paint(Graphics g) {
-                super.paint(g);
-                updater(g);
-            }
-        };
+
 
         Dimension expectedDimension = new Dimension(300, 300);
 
-        panel.setPreferredSize(expectedDimension);
-        panel.setMaximumSize(expectedDimension);
-        panel.setMinimumSize(expectedDimension);
 
         //panel.setBackground(Color.RED); // for debug only
 
         Box box = new Box(BoxLayout.Y_AXIS);
 
         box.add(Box.createVerticalGlue());
-        box.add(panel);
+
         box.add(Box.createVerticalGlue());
 
         frame.add(box);
 
-        panel.setDoubleBuffered(true);
+
         frame.setSize(1000, 1000);
         frame.setIconImage(X);
-        this.panelG = panel.getGraphics();
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -108,52 +91,27 @@ public class Runner {
 
             }
         });
-        panel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
 
-
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
 
 
         frame.setVisible(true);
     }
 
-    public void drawBoard(Graphics g){
-        g.drawLine(panel.getWidth() / 3, 0, panel.getWidth() / 3, panel.getHeight());
-        g.drawLine(2 * panel.getWidth() / 3, 0, 2 * panel.getWidth() / 3, panel.getHeight());
-        g.drawLine(0, panel.getWidth() / 3, panel.getHeight(), panel.getWidth() / 3);
-        g.drawLine(0, 2 * panel.getWidth() / 3, panel.getHeight(), 2 * panel.getWidth() / 3);
+    public void drawBoard(){
+        //DrawLine(Display.getWidth() / 3, 0, Display.getWidth() / 3, Display.getHeight());
+        //DrawLine(2 * Display.getWidth() / 3, 0, 2 * Display.getWidth() / 3, Display.getHeight());
+        //DrawLine(0, Display.getWidth() / 3, Display.getHeight(), Display.getWidth() / 3);
+        //DrawLine(0, 2 * Display.getWidth() / 3, Display.getHeight(), 2 * Display.getWidth() / 3);
+
+        DrawQuadTex(QuickLoad("board"), 0, 0, 450, 450);
     }
 
-    public void drawBoardPieces(Graphics g) {
+    public void drawBoardPieces() {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if(board[i][j] != -10){
-                    DrawQuadTex(pieces[board[i][j]], (j) * (panel.getWidth() / 3) + (panel.getWidth() / 3) / 5, (i) * (panel.getWidth() / 3) + (panel.getWidth() / 3) / 5, 64, 64);
+                    DrawQuadTex(pieces[board[i][j]], (j) * (Display.getWidth() / 3) + (Display.getWidth() / 3) / 5, (i) * (Display.getWidth() / 3) + (Display.getWidth() / 3) / 5, 64, 64);
                 }
             }
         }
@@ -252,7 +210,7 @@ public class Runner {
         Artist.DrawQuadTex(QuickLoad("X"), 50, 50, 64, 64);
     }
 
-    public void updater(Graphics g){
+    public void updater(){
         int arrX = 0;
         int arrY = 0;
 
@@ -260,18 +218,18 @@ public class Runner {
             boolean mouseClicked = Mouse.isButtonDown(0);
 
             if (mouseClicked) {
-                if(Mouse.getX() > 0 && Mouse.getX() < panel.getWidth() / 3){
+                if(Mouse.getX() > 0 && Mouse.getX() < Display.getWidth() / 3){
                     arrX = 0;
-                }else if(Mouse.getX() > panel.getWidth() / 3 && Mouse.getX() < 2 * panel.getWidth() / 3){
+                }else if(Mouse.getX() > Display.getWidth() / 3 && Mouse.getX() < 2 * Display.getWidth() / 3){
                     arrX = 1;
-                }else if(Mouse.getX() > 2 * panel.getWidth() / 3 && Mouse.getX() < panel.getWidth()){
+                }else if(Mouse.getX() > 2 * Display.getWidth() / 3 && Mouse.getX() < Display.getWidth()){
                     arrX = 2;
                 }
-                if(Mouse.getY() > 0 && Mouse.getY() < panel.getWidth() / 3){
+                if(Mouse.getY() > 0 && Mouse.getY() < Display.getWidth() / 3){
                     arrY = 0;
-                }else if(Mouse.getY() > panel.getWidth() / 3 && Mouse.getY() < 2 * panel.getWidth() / 3){
+                }else if(Mouse.getY() > Display.getWidth() / 3 && Mouse.getY() < 2 * Display.getWidth() / 3){
                     arrY = 1;
-                }else if(Mouse.getY() > 2 * panel.getWidth() / 3 && Mouse.getY() < panel.getWidth()){
+                }else if(Mouse.getY() > 2 * Display.getWidth() / 3 && Mouse.getY() < Display.getWidth()){
                     arrY = 2;
                 }
 
@@ -282,7 +240,7 @@ public class Runner {
                     }else {
                         index = 2;
                     }
-                    frame.repaint();
+                    //frame.repaint();
                     drawTurn();
                 }
 
@@ -306,8 +264,8 @@ public class Runner {
 
 
         drawTurn();
-        drawBoard(g);
-        drawBoardPieces(g);
+        drawBoard();
+        drawBoardPieces();
 
 
     }
